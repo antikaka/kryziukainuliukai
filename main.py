@@ -75,18 +75,29 @@ while nera_laimetojo:
         tikrink(pozicijos)
         x += 1
         input_a = input("X ėjimas: ")
-        if input_a in pozicijos:
-            pozicijos[input_a] = "X"
-        else:
+        try:
+            if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                x += 1
+
+            else:
+                pozicijos[input_a] = "X"
+        except:
             print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
             x += 1
+
     elif nera_laimetojo:
         tikrink(pozicijos)
         x += 1
         input_a = input("0 ėjimas: ")
-        if input_a in pozicijos:
-            pozicijos[input_a] = "0"
-        else:
+        try:
+            if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                x += 1
+
+            else:
+                pozicijos[input_a] = "0"
+        except:
             print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
             x += 1
 
