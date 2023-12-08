@@ -5,7 +5,7 @@ def tikrink(pozicijos):
     global nera_laimetojo
     global lygiosios
 
-    ivedimai = sum(value == "X" for value in pozicijos.values()) + sum(value == "0" for value in pozicijos.values())
+    ivedimai = len(uzimti)
     while nera_laimetojo:
 
         if (pozicijos["a1"] == pozicijos["a2"] == pozicijos["a3"]) and (pozicijos["a3"] != "*"):
@@ -40,18 +40,137 @@ def tikrink(pozicijos):
             print(f"{pozicijos["a3"]} laimėjo!")
             nera_laimetojo = False
             break
-        elif ivedimai == 9:
-            print("Niekas nelaimėjo, visi langeliai išnaudoti!")
-            nera_laimetojo = False
-            break
         elif (pozicijos["a1"] != pozicijos["a3"]) and (pozicijos["a1"] != pozicijos["c3"]) and (pozicijos["a1"] != pozicijos["c1"]) and (pozicijos["a2"] != pozicijos["c2"]) and (pozicijos["b1"] != pozicijos["b3"]) and (pozicijos["c1"] != pozicijos["c3"]) and (pozicijos["a3"] != pozicijos["c3"]) and (pozicijos["c1"] != pozicijos["a3"]):
             print("Laimėti neįmanoma!!!")
+            nera_laimetojo = False
+            break
+        elif ivedimai == 9:
+            print("Niekas nelaimėjo, visi langeliai išnaudoti!")
             nera_laimetojo = False
             break
         else:
             break
 
+def pasirinkimas(vertes_sarasas):
+    maxverte = max(vertes_sarasas.values())
+    for key, value in vertes_sarasas.items():
+        if value == maxverte:
+            return key
 
+
+verte = {"a1": 2,
+         "a2": 1,
+         "a3": 2,
+         "b1": 1,
+         "b2": 3,
+         "b3": 1,
+         "c1": 2,
+         "c2": 1,
+         "c3": 2}
+
+def vertes_tikrinimas(verte, poziciju_sarasas):
+    for key, value in verte.items():
+        if key in uzimti:
+            verte[key] = -100
+
+    if poziciju_sarasas["a2"] == "0" and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a3"] != "X"):
+        verte["a1"] = verte["a1"] + 2
+        verte["a3"] = verte["a3"] + 2
+
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a2"] != "X" and poziciju_sarasas["a3"] != "X"):
+
+        verte["a1"] = verte["a1"] + 2
+        verte["a2"] = verte["a2"] + 3
+        verte["a3"] = verte["a3"] + 2
+
+    if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["c1"] != "X" and poziciju_sarasas["c2"] != "X" and poziciju_sarasas["c3"] != "X"):
+
+        verte["c1"] += 2
+        verte["c2"] += 3
+        verte["c3"] += 2
+
+    if (poziciju_sarasas["b1"] == "0" or poziciju_sarasas["b3"] == "0") and (poziciju_sarasas["b1"] != "X" and poziciju_sarasas["b2"] != "x" and poziciju_sarasas["b3"] != "X"):
+
+        verte["b1"] += 2
+        verte["b3"] += 2
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["b1"] != "X" and poziciju_sarasas["c1"] != "X"):
+
+        verte["a1"] += 2
+        verte["b1"] += 3
+        verte["c1"] += 2
+
+    if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and (poziciju_sarasas["a2"] != "X" and poziciju_sarasas["b2"] != "X" and poziciju_sarasas["c2"] != "X"):
+
+        verte["a2"] += 2
+        verte["c2"] += 2
+
+    if (poziciju_sarasas["a3"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["b3"] != "X" and poziciju_sarasas["c3"] != "X"):
+
+        verte["a3"] += 2
+        verte["b3"] += 3
+        verte["c3"] += 2
+
+    if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["c3"] != "X"):
+
+        verte["a1"] += 3
+        verte["c3"] += 3
+
+    if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["c1"] != "X"):
+
+        verte["a3"] += 3
+        verte["c1"] += 3
+
+    if ((poziciju_sarasas["a1"] == "X" or poziciju_sarasas["a3"] == "X") and poziciju_sarasas["a2"] == "X") or (poziciju_sarasas["a1"] == "X" and poziciju_sarasas["a3"] == "X"):
+
+        verte["a1"] += 10
+        verte["a2"] += 10
+        verte["a3"] += 10
+
+    if ((poziciju_sarasas["b1"] == "X" or poziciju_sarasas["b3"] == "X") and  poziciju_sarasas["b2"] == "X") or (poziciju_sarasas["b1"] == "X" and poziciju_sarasas["b3"] == "X"):
+
+        verte["b1"] += 10
+        verte["b2"] += 10
+        verte["b3"] += 10
+
+    if ((poziciju_sarasas["c1"] == "X" or poziciju_sarasas["c3"] == "X") and poziciju_sarasas["c2"] == "X") or (poziciju_sarasas["c1"] == "X" and poziciju_sarasas["c3"] == "X"):
+
+        verte["c1"] += 10
+        verte["c2"] += 10
+        verte["c3"] += 10
+
+    if ((poziciju_sarasas["a1"] == "X" or poziciju_sarasas["c1"] == "X") and poziciju_sarasas["b1"] == "X") or (poziciju_sarasas["a1"] == "X" and poziciju_sarasas["c1"] == "X"):
+
+        verte["a1"] += 10
+        verte["b1"] += 10
+        verte["c1"] += 10
+
+    if ((poziciju_sarasas["a2"] == "X" or poziciju_sarasas["c2"] == "X") and poziciju_sarasas["b2"] == "X") or (
+            poziciju_sarasas["a2"] == "X" and poziciju_sarasas["c2"] == "X"):
+
+        verte["a2"] += 10
+        verte["b2"] += 10
+        verte["c2"] += 10
+
+    if ((poziciju_sarasas["a3"] == "X" or poziciju_sarasas["c3"] == "X") and poziciju_sarasas["b3"] == "X") or (
+            poziciju_sarasas["a3"] == "X" and poziciju_sarasas["c3"] == "X"):
+
+        verte["a3"] += 10
+        verte["b3"] += 10
+        verte["c3"] += 10
+
+    if poziciju_sarasas["b2"] == "X" and (poziciju_sarasas["a1"] == "X" or poziciju_sarasas["c3"] == "X"):
+
+        verte["a1"] += 10
+        verte["c3"] += 10
+
+    if poziciju_sarasas["b2"] == "X" and (poziciju_sarasas["a3"] == "X" or poziciju_sarasas["c1"] == "X"):
+
+        verte["a3"] += 10
+        verte["c1"] += 10
+
+uzimti = []
 
 
 pozicijos = {"a1": "*",
@@ -64,7 +183,7 @@ pozicijos = {"a1": "*",
              "c2": "*",
              "c3": "*"}
 
-x = 0
+pseudoturncount = 0
 
 
 pries_zmogu = False
@@ -97,40 +216,77 @@ while pries_zmogu:
 
         if nera_laimetojo == False:
             break
-        elif x % 2 == 0:
+        elif pseudoturncount % 2 == 0:
             tikrink(pozicijos)
-            x += 1
+            pseudoturncount += 1
             input_a = input("X ėjimas: ")
             try:
                 if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-                    x += 1
+                    pseudoturncount += 1
 
                 else:
                     pozicijos[input_a] = "X"
             except:
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-                x += 1
+                pseudoturncount += 1
 
         elif nera_laimetojo:
             tikrink(pozicijos)
-            x += 1
+            pseudoturncount += 1
             input_a = input("0 ėjimas: ")
             try:
                 if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-                    x += 1
+                    pseudoturncount += 1
 
                 else:
                     pozicijos[input_a] = "0"
             except:
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-                x += 1
+                pseudoturncount += 1
 
         else:
             break
 
 
+while pries_kompiuteri:
+    while nera_laimetojo:
+        vertes_tikrinimas(verte, pozicijos)
+        print("", "   ", "1", "2", "3", "\n", " ", "/-------",  "\n", "A" ,"|", pozicijos["a1"], pozicijos["a2"], pozicijos["a3"],
+              "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"], pozicijos["c2"], pozicijos["c3"])
+        tikrink(pozicijos)
+
+
+        if nera_laimetojo == False:
+            break
+        elif pseudoturncount % 2 == 0:
+            pseudoturncount += 1
+            input_a = input("X ėjimas: ")
+            try:
+                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                    pseudoturncount += 1
+
+                else:
+                    uzimti.append(input_a)
+                    verte[input_a] = 0
+                    pozicijos[input_a] = "X"
+            except:
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                pseudoturncount += 1
+
+        elif nera_laimetojo:
+            tikrink(pozicijos)
+            pseudoturncount += 1
+            vertes_tikrinimas(verte, pozicijos)
+            pasirinkimas1 = pasirinkimas(verte)
+            uzimti.append(pasirinkimas1)
+            pozicijos[pasirinkimas1] = "0"
+            verte[pasirinkimas1] = 0
+
+        else:
+            break
 
 
 
