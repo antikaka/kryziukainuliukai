@@ -1,6 +1,9 @@
 
+import random
+
 nera_laimetojo = True
 lygiosios = False
+#tikrina ar laimėta
 def tikrink(pozicijos):
     global nera_laimetojo
     global lygiosios
@@ -51,13 +54,20 @@ def tikrink(pozicijos):
         else:
             break
 
+#normalaus sunkumo pasirinkimas
 def pasirinkimas(vertes_sarasas):
     maxverte = max(vertes_sarasas.values())
     for key, value in vertes_sarasas.items():
         if value == maxverte:
             return key
 
-
+def lengvas_pasirinkimas(vertes_sarasas):
+    galimi_variantai = []
+    for key, value in vertes_sarasas.items():
+        if value > 0:
+            galimi_variantai.append(key)
+    l_pasirinkimas = random.choice(galimi_variantai)
+    return l_pasirinkimas
 verte = {"a1": 2,
          "a2": 1,
          "a3": 2,
@@ -68,6 +78,7 @@ verte = {"a1": 2,
          "c2": 1,
          "c3": 2}
 
+#vertės tikrinimas normalaus sunkumo pasirinkimui
 def vertes_tikrinimas(verte, poziciju_sarasas):
     for key, value in verte.items():
         if key in uzimti:
@@ -188,6 +199,7 @@ pseudoturncount = 0
 
 pries_zmogu = False
 pries_kompiuteri = False
+pries_lengvakomp = False
 
 while True:
     try:
@@ -201,8 +213,13 @@ while True:
             break
 
         elif input_b == 2:
-            pries_kompiuteri = True
-            break
+            input_c = int(input(f"Pasirinkite priešininko stiprumą: \n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: "))
+            if input_c == 2:
+                pries_kompiuteri = True
+                break
+            if input_c == 1:
+                pries_lengvakomp = True
+                break
     except:
         print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
         continue
@@ -289,6 +306,42 @@ while pries_kompiuteri:
             break
 
 
+while pries_lengvakomp:
+    while nera_laimetojo:
+        vertes_tikrinimas(verte, pozicijos)
+        print("", "   ", "1", "2", "3", "\n", " ", "/-------",  "\n", "A" ,"|", pozicijos["a1"], pozicijos["a2"], pozicijos["a3"],
+              "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"], pozicijos["c2"], pozicijos["c3"])
+        tikrink(pozicijos)
 
+
+        if nera_laimetojo == False:
+            break
+        elif pseudoturncount % 2 == 0:
+            pseudoturncount += 1
+            input_a = input("X ėjimas: ")
+            try:
+                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                    pseudoturncount += 1
+
+                else:
+                    uzimti.append(input_a)
+                    verte[input_a] = 0
+                    pozicijos[input_a] = "X"
+            except:
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                pseudoturncount += 1
+
+        elif nera_laimetojo:
+            tikrink(pozicijos)
+            pseudoturncount += 1
+            vertes_tikrinimas(verte, pozicijos)
+            pasirinkimas2 = lengvas_pasirinkimas(verte)
+            uzimti.append(pasirinkimas2)
+            pozicijos[pasirinkimas2] = "0"
+            verte[pasirinkimas2] = 0
+
+        else:
+            break
 
 
