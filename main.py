@@ -3,6 +3,82 @@ import random
 
 nera_laimetojo = True
 lygiosios = False
+
+
+pries_zmogu = False
+pries_kompiuteri = False
+pries_lengvakomp = False
+meniu = True
+
+def pagrindinis_meniu():
+    global meniu
+    global pries_zmogu
+    global pries_lengvakomp
+    global pries_kompiuteri
+    pries_zmogu = False
+    pries_kompiuteri = False
+    pries_lengvakomp = False
+    meniu = True
+    while meniu:
+        nuline_poz()
+        try:
+            input_b = int(input(
+                f"***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n3. Išeiti (bet kuriuo metu įvedus end, būsite grąžintas čia)\n___Įveskite pasirinkimą: "))
+            if input_b >= 4 or input_b < 1:
+                print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
+                continue
+
+            elif input_b == 1:
+                pries_zmogu = True
+
+                break
+
+            elif input_b == 2:
+                input_c = int(
+                    input(f"Pasirinkite priešininko stiprumą: \n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: "))
+                if input_c == 2:
+                    pries_kompiuteri = True
+                    break
+                if input_c == 1:
+                    pries_lengvakomp = True
+                    break
+
+            elif input_b == 3:
+                pries_zmogu = False
+                pries_kompiuteri = False
+                pries_lengvakomp = False
+                meniu = False
+                break
+
+        except:
+            print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
+            continue
+def nuline_poz():
+    global verte
+    global pozicijos
+    global pseudoturncount
+    pseudoturncount = 0
+    verte = {"a1": 2,
+             "a2": 1,
+             "a3": 2,
+             "b1": 1,
+             "b2": 3,
+             "b3": 1,
+             "c1": 2,
+             "c2": 1,
+             "c3": 2}
+
+    pozicijos = {"a1": "*",
+                 "a2": "*",
+                 "a3": "*",
+                 "b1": "*",
+                 "b2": "*",
+                 "b3": "*",
+                 "c1": "*",
+                 "c2": "*",
+                 "c3": "*"}
+
+
 #tikrina ar laimėta
 def tikrink(pozicijos):
     global nera_laimetojo
@@ -68,6 +144,7 @@ def lengvas_pasirinkimas(vertes_sarasas):
             galimi_variantai.append(key)
     l_pasirinkimas = random.choice(galimi_variantai)
     return l_pasirinkimas
+
 verte = {"a1": 2,
          "a2": 1,
          "a3": 2,
@@ -197,38 +274,15 @@ pozicijos = {"a1": "*",
 pseudoturncount = 0
 
 
-pries_zmogu = False
-pries_kompiuteri = False
-pries_lengvakomp = False
+pagrindinis_meniu()
 
-while True:
-    try:
-        input_b = int(input(f"***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n___Įveskite pasirinkimą: "))
-        if input_b >=3 or input_b < 1:
-            print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
-            continue
 
-        elif input_b == 1:
-            pries_zmogu = True
-            break
-
-        elif input_b == 2:
-            input_c = int(input(f"Pasirinkite priešininko stiprumą: \n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: "))
-            if input_c == 2:
-                pries_kompiuteri = True
-                break
-            if input_c == 1:
-                pries_lengvakomp = True
-                break
-    except:
-        print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
-        continue
 
 while pries_zmogu:
     while nera_laimetojo:
         print("", "   ", "1", "2", "3", "\n", " ", "/-------",  "\n", "A","|", pozicijos["a1"], pozicijos["a2"], pozicijos["a3"],
         "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"], pozicijos["c2"], pozicijos["c3"])
-
+        # print("pries zmogu")
         tikrink(pozicijos)
 
         if nera_laimetojo == False:
@@ -238,7 +292,9 @@ while pries_zmogu:
             pseudoturncount += 1
             input_a = input("X ėjimas: ")
             try:
-                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                if input_a == "end":
+                    pagrindinis_meniu()
+                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
 
@@ -253,7 +309,9 @@ while pries_zmogu:
             pseudoturncount += 1
             input_a = input("0 ėjimas: ")
             try:
-                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                if input_a == "end":
+                    pagrindinis_meniu()
+                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
 
@@ -281,7 +339,9 @@ while pries_kompiuteri:
             pseudoturncount += 1
             input_a = input("X ėjimas: ")
             try:
-                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                if input_a == "end":
+                    pagrindinis_meniu()
+                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
 
@@ -320,9 +380,12 @@ while pries_lengvakomp:
             pseudoturncount += 1
             input_a = input("X ėjimas: ")
             try:
-                if (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
-                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-                    pseudoturncount += 1
+                if input_a == "end":
+                    pagrindinis_meniu()
+
+                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
+                        print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+                        pseudoturncount += 1
 
                 else:
                     uzimti.append(input_a)
