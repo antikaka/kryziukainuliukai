@@ -294,6 +294,7 @@ while pries_zmogu:
             try:
                 if input_a == "end":
                     pagrindinis_meniu()
+                    break
                 elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
@@ -311,6 +312,7 @@ while pries_zmogu:
             try:
                 if input_a == "end":
                     pagrindinis_meniu()
+                    break
                 elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
@@ -341,6 +343,7 @@ while pries_kompiuteri:
             try:
                 if input_a == "end":
                     pagrindinis_meniu()
+                    break
                 elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
                     print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
                     pseudoturncount += 1
