@@ -19,6 +19,7 @@ def pagrindinis_meniu():
     pries_kompiuteri = False
     pries_lengvakomp = False
     meniu = True
+    nera_laimetojo = True
     while meniu:
         nuline_poz()
         try:
@@ -126,6 +127,7 @@ def tikrink(pozicijos):
         elif ivedimai == 9:
             print("Niekas nelaimėjo, visi langeliai išnaudoti!")
             nera_laimetojo = False
+            pagrindinis_meniu()
             break
         else:
             break
@@ -169,7 +171,7 @@ def vertes_tikrinimas(verte, poziciju_sarasas):
     if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a2"] != "X" and poziciju_sarasas["a3"] != "X"):
 
         verte["a1"] = verte["a1"] + 2
-        verte["a2"] = verte["a2"] + 3
+        verte["a2"] = verte["a2"] + 1
         verte["a3"] = verte["a3"] + 2
 
     if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["c1"] != "X" and poziciju_sarasas["c2"] != "X" and poziciju_sarasas["c3"] != "X"):
@@ -186,7 +188,7 @@ def vertes_tikrinimas(verte, poziciju_sarasas):
     if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["b1"] != "X" and poziciju_sarasas["c1"] != "X"):
 
         verte["a1"] += 2
-        verte["b1"] += 3
+        verte["b1"] += 1
         verte["c1"] += 2
 
     if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and (poziciju_sarasas["a2"] != "X" and poziciju_sarasas["b2"] != "X" and poziciju_sarasas["c2"] != "X"):
@@ -333,7 +335,7 @@ while pries_kompiuteri:
         print("", "   ", "1", "2", "3", "\n", " ", "/-------",  "\n", "A" ,"|", pozicijos["a1"], pozicijos["a2"], pozicijos["a3"],
               "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"], pozicijos["c2"], pozicijos["c3"])
         tikrink(pozicijos)
-
+        print(verte)
 
         if nera_laimetojo == False:
             break
