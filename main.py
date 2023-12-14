@@ -10,22 +10,25 @@ def pagrindinis_meniu(): #pagrindinis meniu
 
     while True:
         input_c = input(
-            "***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n3. Išeiti \n----Bet kuriuo metu įvedus 'end', būsite grąžintas čia----\n___Įveskite pasirinkimą: "
+            "***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n3. Rodyti šios sesijos rezultatus\n4. Išeiti \n----Bet kuriuo metu įvedus 'end', būsite grąžintas čia----\n___Įveskite pasirinkimą: "
         )
 
-        if input_c == '1':
+        if input_c == "1":
             pries_zmogu()
             break
-        elif input_c == '2':
+        elif input_c == "2":
             input_b = input(
                 "Pasirinkite priešininko stiprumą:\n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: ")
-            if input_b == '1':
+            if input_b == "1":
                 pries_lengvakomp()
                 break
-            elif input_b == '2':
+            elif input_b == "2":
                 pries_kompiuteri()
                 break
-        elif input_c == '3':
+        elif input_c == "3":
+            print(f"X žaidėjo pergalės: {laimejimai["X"]}\n0 žaidėjo pergalės: {laimejimai["0"]}")
+            continue
+        elif input_c == "4":
             sys.exit()
         else:
             print("Netinkamas pasirinkimas. Bandykite dar kartą.")
@@ -87,7 +90,8 @@ pozicijos = {"a1": "*",
              "c2": "*",
              "c3": "*"}
 
-
+laimejimai = { "X": 0,
+               "0": 0}
 
 def tikrink(pozicijos):  #tikrina ar laimėta, ar lygiosios ir pnš
 
@@ -97,43 +101,43 @@ def tikrink(pozicijos):  #tikrina ar laimėta, ar lygiosios ir pnš
 
     if (pozicijos["a1"] == pozicijos["a2"] == pozicijos["a3"]) and (pozicijos["a3"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["a1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["b1"] == pozicijos["b2"] == pozicijos["b3"]) and (pozicijos["b3"] != "*"):
         print(f"{pozicijos["b1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["b1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["c1"] == pozicijos["c2"] == pozicijos["c3"]) and (pozicijos["c3"] != "*"):
         print(f"{pozicijos["c1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["c1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a1"] == pozicijos["b2"] == pozicijos["c3"]) and (pozicijos["c3"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["a1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a3"] == pozicijos["b2"] == pozicijos["c1"]) and (pozicijos["c1"] != "*"):
         print(f"{pozicijos["c1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["c1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a1"] == pozicijos["b1"] == pozicijos["c1"]) and (pozicijos["c1"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["a1"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a2"] == pozicijos["b2"] == pozicijos["c2"]) and (pozicijos["c2"] != "*"):
         print(f"{pozicijos["a2"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["a2"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a3"] == pozicijos["b3"] == pozicijos["c3"]) and (pozicijos["b3"] != "*"):
         print(f"{pozicijos["a3"]} laimėjo!")
-        nera_laimetojo = False
+        laimejimai[pozicijos["a3"]] += 1
         pagrindinis_meniu()
     elif (pozicijos["a1"] != pozicijos["a3"]) and (pozicijos["a1"] != pozicijos["c3"]) and (pozicijos["a1"] != pozicijos["c1"]) and (pozicijos["a2"] != pozicijos["c2"]) and (pozicijos["b1"] != pozicijos["b3"]) and (pozicijos["c1"] != pozicijos["c3"]) and (pozicijos["a3"] != pozicijos["c3"]) and (pozicijos["c1"] != pozicijos["a3"]):
         print("Laimėti neįmanoma!!!")
-        nera_laimetojo = False
+
         pagrindinis_meniu()
     elif ivedimai == 9:
         print("Niekas nelaimėjo, visi langeliai išnaudoti!")
-        nera_laimetojo = False
+
         pagrindinis_meniu()
 
 
@@ -168,47 +172,47 @@ def vertes_tikrinimas(verte, poziciju_sarasas): #galimų ėjimų vertės tikrini
 
     if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a2"] != "X" and poziciju_sarasas["a3"] != "X"):
 
-        verte["a1"] = verte["a1"] + 3
-        verte["a2"] = verte["a2"] + 2
-        verte["a3"] = verte["a3"] + 3
+        verte["a1"] = verte["a1"] + 5
+        verte["a2"] = verte["a2"] + 3
+        verte["a3"] = verte["a3"] + 5
 
     if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["c1"] != "X" and poziciju_sarasas["c2"] != "X" and poziciju_sarasas["c3"] != "X"):
 
-        verte["c1"] += 3
+        verte["c1"] += 5
         verte["c2"] += 3
-        verte["c3"] += 3
+        verte["c3"] += 5
 
     if (poziciju_sarasas["b1"] == "0" or poziciju_sarasas["b3"] == "0") and (poziciju_sarasas["b1"] != "X" and poziciju_sarasas["b2"] != "x" and poziciju_sarasas["b3"] != "X"):
 
-        verte["b1"] += 3
-        verte["b3"] += 3
+        verte["b1"] += 5
+        verte["b3"] += 5
 
     if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["b1"] != "X" and poziciju_sarasas["c1"] != "X"):
 
-        verte["a1"] += 3
+        verte["a1"] += 5
         verte["b1"] += 2
-        verte["c1"] += 3
+        verte["c1"] += 5
 
     if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and (poziciju_sarasas["a2"] != "X" and poziciju_sarasas["b2"] != "X" and poziciju_sarasas["c2"] != "X"):
 
-        verte["a2"] += 3
-        verte["c2"] += 3
+        verte["a2"] += 5
+        verte["c2"] += 5
 
     if (poziciju_sarasas["a3"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["b3"] != "X" and poziciju_sarasas["c3"] != "X"):
 
-        verte["a3"] += 3
+        verte["a3"] += 5
         verte["b3"] += 3
-        verte["c3"] += 3
+        verte["c3"] += 5
 
     if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["c3"] != "X"):
 
-        verte["a1"] += 3
-        verte["c3"] += 3
+        verte["a1"] += 5
+        verte["c3"] += 5
 
     if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["c1"] != "X"):
 
-        verte["a3"] += 3
-        verte["c1"] += 3
+        verte["a3"] += 5
+        verte["c1"] += 5
 
     if ((poziciju_sarasas["a1"] == "X" or poziciju_sarasas["a3"] == "X") and poziciju_sarasas["a2"] == "X") or (poziciju_sarasas["a1"] == "X" and poziciju_sarasas["a3"] == "X"):
 
