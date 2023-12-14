@@ -38,7 +38,6 @@ uzimti = []
 
 def zaidimo_pradzia(): #žaidimo vizualizacija
 
-    tikrink(pozicijos)
     return print("", "   ", "1", "2", "3", "\n", " ", "/-------", "\n", "A", "|", pozicijos["a1"], pozicijos["a2"],
                  pozicijos["a3"],
                  "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"],
@@ -102,42 +101,50 @@ def tikrink(pozicijos):  #tikrina ar laimėta, ar lygiosios ir pnš
     if (pozicijos["a1"] == pozicijos["a2"] == pozicijos["a3"]) and (pozicijos["a3"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
         laimejimai[pozicijos["a1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["b1"] == pozicijos["b2"] == pozicijos["b3"]) and (pozicijos["b3"] != "*"):
         print(f"{pozicijos["b1"]} laimėjo!")
         laimejimai[pozicijos["b1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["c1"] == pozicijos["c2"] == pozicijos["c3"]) and (pozicijos["c3"] != "*"):
         print(f"{pozicijos["c1"]} laimėjo!")
         laimejimai[pozicijos["c1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a1"] == pozicijos["b2"] == pozicijos["c3"]) and (pozicijos["c3"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
         laimejimai[pozicijos["a1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a3"] == pozicijos["b2"] == pozicijos["c1"]) and (pozicijos["c1"] != "*"):
         print(f"{pozicijos["c1"]} laimėjo!")
         laimejimai[pozicijos["c1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a1"] == pozicijos["b1"] == pozicijos["c1"]) and (pozicijos["c1"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
         laimejimai[pozicijos["a1"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a2"] == pozicijos["b2"] == pozicijos["c2"]) and (pozicijos["c2"] != "*"):
         print(f"{pozicijos["a2"]} laimėjo!")
         laimejimai[pozicijos["a2"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a3"] == pozicijos["b3"] == pozicijos["c3"]) and (pozicijos["b3"] != "*"):
         print(f"{pozicijos["a3"]} laimėjo!")
         laimejimai[pozicijos["a3"]] += 1
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif (pozicijos["a1"] != pozicijos["a3"]) and (pozicijos["a1"] != pozicijos["c3"]) and (pozicijos["a1"] != pozicijos["c1"]) and (pozicijos["a2"] != pozicijos["c2"]) and (pozicijos["b1"] != pozicijos["b3"]) and (pozicijos["c1"] != pozicijos["c3"]) and (pozicijos["a3"] != pozicijos["c3"]) and (pozicijos["c1"] != pozicijos["a3"]):
         print("Laimėti neįmanoma!!!")
-
+        zaidimo_pradzia()
         pagrindinis_meniu()
     elif ivedimai == 9:
         print("Niekas nelaimėjo, visi langeliai išnaudoti!")
-
+        zaidimo_pradzia()
         pagrindinis_meniu()
 
 
@@ -278,6 +285,35 @@ def vertes_tikrinimas(verte, poziciju_sarasas): #galimų ėjimų vertės tikrini
 
         verte["c2"] += 30
 
+    if (poziciju_sarasas["b1"] == "0" or poziciju_sarasas["b3"] == "0") and poziciju_sarasas["b2"] != "X":
+
+        verte["b1"] += 10
+        verte["b3"] += 10
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and poziciju_sarasas["a2"] != "X":
+
+        verte["a1"] += 10
+        verte["a3"] += 10
+
+    if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and poziciju_sarasas["c2"] != "X":
+
+        verte["c1"] += 10
+        verte["c3"] += 10
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and poziciju_sarasas["b1"] != "X":
+
+        verte["a1"] += 10
+        verte["c1"] += 10
+
+    if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and poziciju_sarasas["b2"] != "X":
+
+        verte["a2"] += 10
+        verte["c2"] += 10
+
+    if (poziciju_sarasas["a3"] == "0" or poziciju_sarasas["c3"] == "0") and poziciju_sarasas["b3"] != "X":
+
+        verte["a3"] += 10
+        verte["c3"] += 10
 
 def pries_zmogu():            #pats žaidimas, antras žaidėjas žmogus
     while nera_laimetojo:
@@ -315,7 +351,7 @@ def pries_zmogu():            #pats žaidimas, antras žaidėjas žmogus
 def pries_kompiuteri():      #pats žaidimas, antras žaidėjas normalaus sunkumo kompiuteris
     while nera_laimetojo:
         tikrink(pozicijos)
-        #print(verte)
+        print(verte)
         if len(uzimti) % 2 == 0:
             zaidimo_pradzia()
             vertes_tikrinimas(verte, pozicijos)
@@ -346,10 +382,10 @@ def pries_kompiuteri():      #pats žaidimas, antras žaidėjas normalaus sunkum
 def pries_lengvakomp():     #pats žaidimas, antras žaidėjas lengvo sunkumo (atsitiktinis) kompiuteris
     while nera_laimetojo:
         tikrink(pozicijos)
-        zaidimo_pradzia()
         vertes_tikrinimas(verte, pozicijos)
 
         if len(uzimti) % 2 == 0:
+            zaidimo_pradzia()
             input_a = input("X ėjimas: ")
             if input_a == "end":
                 pagrindinis_meniu()
@@ -372,6 +408,7 @@ def pries_lengvakomp():     #pats žaidimas, antras žaidėjas lengvo sunkumo (a
             tikrink(pozicijos)
             vertes_tikrinimas(verte, pozicijos)
             pasirinkimas2 = lengvas_pasirinkimas(verte)
+            print(f"Kompiuterio ėjimas: {pasirinkimas2}")
             uzimti.append(pasirinkimas2)
             pozicijos[pasirinkimas2] = "0"
             verte[pasirinkimas2] = 0
