@@ -1,43 +1,36 @@
 
 import random
+import sys
 
 nera_laimetojo = True
-
+is_vidaus = False
 
 def pagrindinis_meniu(): #pagrindinis meniu
+    global nera_laimetojo
     nuline_poz()
-    global meniu
-    meniu = True
-    while meniu == True:
-        try:
-            input_b = int(input(
-                f"***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n3. Išeiti \n----Bet kuriuo metu įvedus 'end', būsite grąžintas čia----\n___Įveskite pasirinkimą: "))
-            if input_b >= 4 or input_b < 1:
-                print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
-                continue
 
-            elif input_b == 1:
-                pries_zmogu()
+    while True:
+        input_c = input(
+            "***Kryžiukai nuliukai***\n1. Prieš žmogų\n2. Prieš kompiuterį\n3. Išeiti \n----Bet kuriuo metu įvedus 'end', būsite grąžintas čia----\n___Įveskite pasirinkimą: "
+        )
 
+        if input_c == '1':
+            pries_zmogu()
+            break
+        elif input_c == '2':
+            input_b = input(
+                "Pasirinkite priešininko stiprumą:\n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: ")
+            if input_b == '1':
+                pries_lengvakomp()
                 break
-
-            elif input_b == 2:
-                input_c = int(
-                    input(f"Pasirinkite priešininko stiprumą: \n1. lengvas\n2. normalus\n___Įveskite pasirinkimą: "))
-                if input_c == 2:
-                    pries_kompiuteri()
-                    break
-                if input_c == 1:
-                    pries_lengvakomp()
-                    break
-
-            elif input_b == 3:
-                meniu = False
+            elif input_b == '2':
+                pries_kompiuteri()
                 break
+        elif input_c == '3':
+            sys.exit()
+        else:
+            print("Netinkamas pasirinkimas. Bandykite dar kartą.")
 
-        except:
-            print("Neteisingas pasirinkimas, pasirinkite prieš ką žaisite.")
-            continue
 
 uzimti = []
 
@@ -267,69 +260,55 @@ def vertes_tikrinimas(verte, poziciju_sarasas): #galimų ėjimų vertės tikrini
 
 def pries_zmogu():            #pats žaidimas, antras žaidėjas žmogus
     while nera_laimetojo:
+        tikrink(pozicijos)
         zaidimo_pradzia()
-        print(len(uzimti))
-        if not nera_laimetojo:
-            break
-        elif len(uzimti) % 2 == 0:
+        if len(uzimti) % 2 == 0:
             tikrink(pozicijos)
             input_a = input("X ėjimas: ")
-            try:
-                if input_a == "end":
-                    pagrindinis_meniu()
-                    break
-                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
-                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-
-                else:
-                    pozicijos[input_a] = "X"
-                    uzimti.append(input_a)
-            except:
+            if input_a == "end":
+                pagrindinis_meniu()
+                break
+            elif input_a not in pozicijos.keys():
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-
+            elif pozicijos[input_a] == "X" or pozicijos[input_a] == "0":
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+            else:
+                pozicijos[input_a] = "X"
+                uzimti.append(input_a)
         elif nera_laimetojo:
             tikrink(pozicijos)
             input_a = input("0 ėjimas: ")
-            try:
-                if input_a == "end":
-                    pagrindinis_meniu()
-                    break
-                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
-                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-
-                else:
-                    pozicijos[input_a] = "0"
-                    uzimti.append(input_a)
-            except:
+            if input_a == "end":
+                pagrindinis_meniu()
+                break
+            elif input_a not in pozicijos.keys():
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-
+            elif pozicijos[input_a] == "X" or pozicijos[input_a] == "0":
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+            else:
+                pozicijos[input_a] = "0"
+                uzimti.append(input_a)
         else:
             break
 
 def pries_kompiuteri():      #pats žaidimas, antras žaidėjas normalaus sunkumo kompiuteris
     while nera_laimetojo:
+        tikrink(pozicijos)
         zaidimo_pradzia()
-        print(verte)
-        if nera_laimetojo == False:
-            break
-        elif len(uzimti) % 2 == 0:
+        if len(uzimti) % 2 == 0:
             vertes_tikrinimas(verte, pozicijos)
-
             input_a = input("X ėjimas: ")
-            try:
-                if input_a == "end":
-                    pagrindinis_meniu()
-                    break
-                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
-                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
-
-
-                else:
-                    uzimti.append(input_a)
-                    verte[input_a] = 0
-                    pozicijos[input_a] = "X"
-            except:
+            if input_a == "end":
+                pagrindinis_meniu()
+                break
+            elif input_a not in pozicijos.keys():
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+            elif pozicijos[input_a] == "X" or pozicijos[input_a] == "0":
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+            else:
+                uzimti.append(input_a)
+                verte[input_a] = 0
+                pozicijos[input_a] = "X"
 
         elif nera_laimetojo:
             tikrink(pozicijos)
@@ -345,28 +324,28 @@ def pries_kompiuteri():      #pats žaidimas, antras žaidėjas normalaus sunkum
 
 def pries_lengvakomp():     #pats žaidimas, antras žaidėjas lengvo sunkumo (atsitiktinis) kompiuteris
     while nera_laimetojo:
+        tikrink(pozicijos)
         zaidimo_pradzia()
         vertes_tikrinimas(verte, pozicijos)
 
-
-        if nera_laimetojo == False:
-            break
-        elif len(uzimti) % 2 == 0:
+        if len(uzimti) % 2 == 0:
             input_a = input("X ėjimas: ")
-            try:
-                if input_a == "end":
-                    pagrindinis_meniu()
-                    break
+            if input_a == "end":
+                pagrindinis_meniu()
+                break
 
-                elif (pozicijos[input_a] == "X" or pozicijos[input_a] == "0") or (input_a not in pozicijos):
-                    print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+            elif input_a not in pozicijos.keys():
 
-                else:
-                    uzimti.append(input_a)
-                    verte[input_a] = 0
-                    pozicijos[input_a] = "X"
-            except:
                 print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+
+            elif pozicijos[input_a] == "X" or pozicijos[input_a] == "0":
+
+                print(f"Jūs pasirinkote: {input_a}, tai nėra tinkamas variantas")
+
+            else:
+                uzimti.append(input_a)
+                verte[input_a] = 0
+                pozicijos[input_a] = "X"
 
         elif nera_laimetojo:
             tikrink(pozicijos)
