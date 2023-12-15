@@ -1,11 +1,10 @@
 import random
 import sys
 
-nera_laimetojo = True
+
 
 
 def pagrindinis_meniu():  # pagrindinis meniu
-    global nera_laimetojo
     nuline_poz()
 
     while True:
@@ -34,7 +33,7 @@ def pagrindinis_meniu():  # pagrindinis meniu
             print("Netinkamas pasirinkimas. Bandykite dar kartą.")
 
 
-uzimti = []
+uzimti = []     # uzimti sąrašas - tie langeliai kurie užimti žaidimo metu
 
 
 def zaidimo_pradzia():  # žaidimo vizualizacija
@@ -45,7 +44,7 @@ def zaidimo_pradzia():  # žaidimo vizualizacija
                  pozicijos["c2"], pozicijos["c3"])
 
 
-w1 = {"a1": "*", "a2": "*", "a3": "*"}
+w1 = {"a1": "*", "a2": "*", "a3": "*"}  #w1-w8 yra "win conditions", naudojami apskaičiuoti normalaus AI ėjimus
 w2 = {"b1": "*", "b2": "*", "b3": "*"}
 w3 = {"c1": "*", "c2": "*", "c3": "*"}
 w4 = {"a1": "*", "c1": "*", "b1": "*"}
@@ -66,7 +65,7 @@ verte = {"a1": 2,  # pradinės vertės; vidurinis > kampiniai > visi kiti
          "c2": 1,
          "c3": 2}
 
-pozicijos = {"a1": "*",
+pozicijos = {"a1": "*",     #pozicijų sąrašas, naudojamas ir vizualizacijai, ir kitur
              "a2": "*",
              "a3": "*",
              "b1": "*",
@@ -76,12 +75,12 @@ pozicijos = {"a1": "*",
              "c2": "*",
              "c3": "*"}
 
-laimejimai = {"X": 0,
+laimejimai = {"X": 0,       #laimėjimu sekimas
               "0": 0}
 
 
 
-def nuline_poz():  # žaidimo nulinė pozicija, naudojama tada kai žaidimas baigiasi
+def nuline_poz():  # žaidimo nulinė pozicija, naudojama tada kai žaidimas baigiasi, prieš pradedant dar vieną žaidimą
     global verte
     global pozicijos
     global uzimti
@@ -195,10 +194,9 @@ def lengvas_pasirinkimas(
     l_pasirinkimas = random.choice(galimi_variantai)
     return l_pasirinkimas
 
-def vertes_korekcija(kas_eina, ejimas):
-
-    for key, value in verte.items():
-        if key in uzimti:
+def vertes_korekcija(kas_eina, ejimas): # v2 normalaus lygio AI, tikrina kuri iš pergalių (win condition) yra artima
+    for key, value in verte.items():    # v2 nuo praeito dar skiriasi tuo, kad atsižvelgia į tai kieno ėjimas prieš tai buvo
+        if key in uzimti:               # patikra vyksta po X (priešininko) ir po 0 (kompiuterio) ėjimų
             verte[key] = -1000
 
     if list(pozicijos.values()).count("X") > list(pozicijos.values()).count("0"):
@@ -208,7 +206,7 @@ def vertes_korekcija(kas_eina, ejimas):
             if (list(ww[num].values()).count("X") > 1) and (list(ww[num].values()).count("0") == 0):
                 temp_w = ww[num].copy()
                 for key, value in temp_w.items():
-                    print(f"mano ejimas, radau du X, pridedu 200 prie {verte[key]}")
+                    # print(f"mano ejimas, radau du X, pridedu 200 prie {verte[key]}")
                     verte[key] += 200
 
     if list(pozicijos.values()).count("X") == list(pozicijos.values()).count("0"):
@@ -218,7 +216,7 @@ def vertes_korekcija(kas_eina, ejimas):
             if (list(ww[num].values()).count("0") > 1) and (list(ww[num].values()).count("X") == 0):
                 temp_w = ww[num].copy()
                 for key, value in temp_w.items():
-                    print(f"prieso ejimas, radau du 0, pridedu 200 prie {verte[key]}")
+                    # print(f"prieso ejimas, radau du 0, pridedu 200 prie {verte[key]}")
                     verte[key] += 200
 
 
@@ -228,19 +226,19 @@ def vertes_korekcija(kas_eina, ejimas):
         if (list(ww[num].values()).count("0") > 1) and (list(ww[num].values()).count("X") == 0):
             temp_w = ww[num].copy()
             for key, value in temp_w.items():
-                print(f"radau du 0, pridedu 20 prie {verte[key]}")
+                # print(f"radau du 0, pridedu 20 prie {verte[key]}")
                 verte[key] += 20
 
         if (list(ww[num].values()).count("X") > 1) and (list(ww[num].values()).count("0") == 0):
             temp_w = ww[num].copy()
             for key, value in temp_w.items():
-                print(f"radau du X, pridedu 10 prie {verte[key]}")
+                # print(f"radau du X, pridedu 10 prie {verte[key]}")
                 verte[key] += 10
 
         if (list(ww[num].values()).count("0") > 0) and (list(ww[num].values()).count("X") == 0):
             temp_w = ww[num].copy()
             for key, value in temp_w.items():
-                print(f"radau 0, pridedu 3 prie {verte[key]}")
+                # print(f"radau 0, pridedu 3 prie {verte[key]}")
                 verte[key] += 3
 
         if (list(ww[num].values()).count("0") > 0) and (list(ww[num].values()).count("X") == 1):
@@ -249,24 +247,15 @@ def vertes_korekcija(kas_eina, ejimas):
                 verte[key] -= 1
 
 
-
-    print(verte)
-
-
-
-
-
-
-def vertes_tikrinimas(verte,
-                      poziciju_sarasas):  # galimų ėjimų vertės tikrinimas atsižvelgiant į savo ėjimus ir į priešininko ėjimus
-    for key, value in verte.items():  # prioritetas skiriamas ne savo pergalės užtikrinimui, bet priešininko pralaimėjimui
+def lengvojo_verte(verte):  #naudojamas lengvojo sunkumo AI ėjimams nuspręsti
+    for key, value in verte.items():
         if key in uzimti:
             verte[key] = -1000
 
 
 
 def pries_zmogu():  # pats žaidimas, antras žaidėjas žmogus
-    while nera_laimetojo:
+    while True:
         tikrink(pozicijos)
         zaidimo_pradzia()
         if len(uzimti) % 2 == 0:
@@ -282,7 +271,7 @@ def pries_zmogu():  # pats žaidimas, antras žaidėjas žmogus
             else:
                 pozicijos[input_a] = "X"
                 uzimti.append(input_a)
-        elif nera_laimetojo:
+        else:
             tikrink(pozicijos)
             input_a = input("0 ėjimas: ")
             if input_a == "end":
@@ -295,17 +284,15 @@ def pries_zmogu():  # pats žaidimas, antras žaidėjas žmogus
             else:
                 pozicijos[input_a] = "0"
                 uzimti.append(input_a)
-        else:
-            break
+
 
 
 def pries_kompiuteri():  # pats žaidimas, antras žaidėjas normalaus sunkumo kompiuteris
-    while nera_laimetojo:
+    while True:
         tikrink(pozicijos)
         # print(verte)
         if len(uzimti) % 2 == 0:
             zaidimo_pradzia()
-            vertes_tikrinimas(verte, pozicijos)
             input_a = input("X ėjimas: ")
             if input_a == "end":
                 pagrindinis_meniu()
@@ -320,23 +307,21 @@ def pries_kompiuteri():  # pats žaidimas, antras žaidėjas normalaus sunkumo k
                 pozicijos[input_a] = "X"
                 vertes_korekcija("X", input_a)
 
-        elif nera_laimetojo:
+        else:
             tikrink(pozicijos)
-            vertes_tikrinimas(verte, pozicijos)
             pasirinkimas1 = pasirinkimas(verte)
             uzimti.append(pasirinkimas1)
             print(f"Kompiuterio ėjimas: {pasirinkimas1}")
             pozicijos[pasirinkimas1] = "0"
             verte[pasirinkimas1] = 0
             vertes_korekcija("0", pasirinkimas1)
-        else:
-            break
+
 
 
 def pries_lengvakomp():  # pats žaidimas, antras žaidėjas lengvo sunkumo (atsitiktinis) kompiuteris
-    while nera_laimetojo:
+    while True:
         tikrink(pozicijos)
-        vertes_tikrinimas(verte, pozicijos)
+        lengvojo_verte(verte)
 
         if len(uzimti) % 2 == 0:
             zaidimo_pradzia()
@@ -358,17 +343,14 @@ def pries_lengvakomp():  # pats žaidimas, antras žaidėjas lengvo sunkumo (ats
                 verte[input_a] = 0
                 pozicijos[input_a] = "X"
 
-        elif nera_laimetojo:
+        else:
             tikrink(pozicijos)
-            vertes_tikrinimas(verte, pozicijos)
+            lengvojo_verte(verte)
             pasirinkimas2 = lengvas_pasirinkimas(verte)
             print(f"Kompiuterio ėjimas: {pasirinkimas2}")
             uzimti.append(pasirinkimas2)
             pozicijos[pasirinkimas2] = "0"
             verte[pasirinkimas2] = 0
-
-        else:
-            break
 
 
 pagrindinis_meniu()
