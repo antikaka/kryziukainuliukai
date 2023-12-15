@@ -1,10 +1,10 @@
+
 import random
 import sys
 
 nera_laimetojo = True
 
-
-def pagrindinis_meniu():  # pagrindinis meniu
+def pagrindinis_meniu(): #pagrindinis meniu
     global nera_laimetojo
     nuline_poz()
 
@@ -36,56 +36,17 @@ def pagrindinis_meniu():  # pagrindinis meniu
 
 uzimti = []
 
-
-def zaidimo_pradzia():  # žaidimo vizualizacija
+def zaidimo_pradzia(): #žaidimo vizualizacija
 
     return print("", "   ", "1", "2", "3", "\n", " ", "/-------", "\n", "A", "|", pozicijos["a1"], pozicijos["a2"],
                  pozicijos["a3"],
                  "\n", "B", "|", pozicijos["b1"], pozicijos["b2"], pozicijos["b3"], "\n", "C", "|", pozicijos["c1"],
                  pozicijos["c2"], pozicijos["c3"])
 
-
-w1 = {"a1": "*", "a2": "*", "a3": "*"}
-w2 = {"b1": "*", "b2": "*", "b3": "*"}
-w3 = {"c1": "*", "c2": "*", "c3": "*"}
-w4 = {"a1": "*", "c1": "*", "b1": "*"}
-w5 = {"a2": "*", "b2": "*", "c2": "*"}
-w6 = {"a3": "*", "b3": "*", "c3": "*"}
-w7 = {"a1": "*", "b2": "*", "c3": "*"}
-w8 = {"c3": "*", "b2": "*", "a1": "*"}
-ww = {1: w1, 2: w2, 3: w3, 4: w4, 5: w5, 6: w6, 7: w7, 8: w8}
-
-
-verte = {"a1": 2,  # pradinės vertės; vidurinis > kampiniai > visi kiti
-         "a2": 1,
-         "a3": 2,
-         "b1": 1,
-         "b2": 5,
-         "b3": 1,
-         "c1": 2,
-         "c2": 1,
-         "c3": 2}
-
-pozicijos = {"a1": "*",
-             "a2": "*",
-             "a3": "*",
-             "b1": "*",
-             "b2": "*",
-             "b3": "*",
-             "c1": "*",
-             "c2": "*",
-             "c3": "*"}
-
-laimejimai = {"X": 0,
-              "0": 0}
-
-
-
-def nuline_poz():  # žaidimo nulinė pozicija, naudojama tada kai žaidimas baigiasi
+def nuline_poz(): #žaidimo nulinė pozicija, naudojama tada kai žaidimas baigiasi
     global verte
     global pozicijos
     global uzimti
-    global w1, w2, w3, w4, w5, w6, w7, w8
     verte["a1"] = 2
     verte["a2"] = 1
     verte["a3"] = 2
@@ -107,24 +68,35 @@ def nuline_poz():  # žaidimo nulinė pozicija, naudojama tada kai žaidimas bai
                  "c3": "*"}
     uzimti = []
 
-    for x in ww.keys():
-        for key in ww[x].keys():
-            ww[x][key] = "*"
 
-    w1 = {"a1": "*", "a2": "*", "a3": "*"}
-    w2 = {"b1": "*", "b2": "*", "b3": "*"}
-    w3 = {"c1": "*", "c2": "*", "c3": "*"}
-    w4 = {"a1": "*", "c1": "*", "b1": "*"}
-    w5 = {"a2": "*", "b2": "*", "c2": "*"}
-    w6 = {"a3": "*", "b3": "*", "c3": "*"}
-    w7 = {"a1": "*", "b2": "*", "c3": "*"}
-    w8 = {"c3": "*", "b2": "*", "a1": "*"}
+verte = {"a1": 2,    #pradinės vertės; vidurinis > kampiniai > visi kiti
+         "a2": 1,
+         "a3": 2,
+         "b1": 1,
+         "b2": 3,
+         "b3": 1,
+         "c1": 2,
+         "c2": 1,
+         "c3": 2}
 
+pozicijos = {"a1": "*",
+             "a2": "*",
+             "a3": "*",
+             "b1": "*",
+             "b2": "*",
+             "b3": "*",
+             "c1": "*",
+             "c2": "*",
+             "c3": "*"}
 
+laimejimai = { "X": 0,
+               "0": 0}
 
-def tikrink(pozicijos):  # tikrina ar laimėta, ar lygiosios ir pnš
+def tikrink(pozicijos):  #tikrina ar laimėta, ar lygiosios ir pnš
+
 
     ivedimai = len(uzimti)
+
 
     if (pozicijos["a1"] == pozicijos["a2"] == pozicijos["a3"]) and (pozicijos["a3"] != "*"):
         print(f"{pozicijos["a1"]} laimėjo!")
@@ -166,10 +138,7 @@ def tikrink(pozicijos):  # tikrina ar laimėta, ar lygiosios ir pnš
         laimejimai[pozicijos["a3"]] += 1
         zaidimo_pradzia()
         pagrindinis_meniu()
-    elif (pozicijos["a1"] != pozicijos["a3"]) and (pozicijos["a1"] != pozicijos["c3"]) and (
-            pozicijos["a1"] != pozicijos["c1"]) and (pozicijos["a2"] != pozicijos["c2"]) and (
-            pozicijos["b1"] != pozicijos["b3"]) and (pozicijos["c1"] != pozicijos["c3"]) and (
-            pozicijos["a3"] != pozicijos["c3"]) and (pozicijos["c1"] != pozicijos["a3"]):
+    elif (pozicijos["a1"] != pozicijos["a3"]) and (pozicijos["a1"] != pozicijos["c3"]) and (pozicijos["a1"] != pozicijos["c1"]) and (pozicijos["a2"] != pozicijos["c2"]) and (pozicijos["b1"] != pozicijos["b3"]) and (pozicijos["c1"] != pozicijos["c3"]) and (pozicijos["a3"] != pozicijos["c3"]) and (pozicijos["c1"] != pozicijos["a3"]):
         print("Laimėti neįmanoma!!!")
         zaidimo_pradzia()
         pagrindinis_meniu()
@@ -179,15 +148,15 @@ def tikrink(pozicijos):  # tikrina ar laimėta, ar lygiosios ir pnš
         pagrindinis_meniu()
 
 
-def pasirinkimas(vertes_sarasas):  # normalaus sunkumo AI pasirinkimas iš vertės sąrašo
+
+
+def pasirinkimas(vertes_sarasas): #normalaus sunkumo AI pasirinkimas iš vertės sąrašo
     maxverte = max(vertes_sarasas.values())
     for key, value in vertes_sarasas.items():
         if value == maxverte:
             return key
 
-
-def lengvas_pasirinkimas(
-        vertes_sarasas):  # lengvo sunkumo AI pasirinkimas, irgi iš vertės sąrašo, bet neatsižvelgiant į pačią vertę, o tik į tai kokie žingsniai yra galimi
+def lengvas_pasirinkimas(vertes_sarasas): #lengvo sunkumo AI pasirinkimas, irgi iš vertės sąrašo, bet neatsižvelgiant į pačią vertę, o tik į tai kokie žingsniai yra galimi
     galimi_variantai = []
     for key, value in vertes_sarasas.items():
         if value > 0:
@@ -195,77 +164,158 @@ def lengvas_pasirinkimas(
     l_pasirinkimas = random.choice(galimi_variantai)
     return l_pasirinkimas
 
-def vertes_korekcija(kas_eina, ejimas):
 
-    for key, value in verte.items():
+
+
+def vertes_tikrinimas(verte, poziciju_sarasas): #galimų ėjimų vertės tikrinimas atsižvelgiant į savo ėjimus ir į priešininko ėjimus
+    for key, value in verte.items():            #prioritetas skiriamas ne savo pergalės užtikrinimui, bet priešininko pralaimėjimui
         if key in uzimti:
             verte[key] = -1000
 
-    if list(pozicijos.values()).count("X") > list(pozicijos.values()).count("0"):
-        for num in range(1, 9):
-            if ejimas in ww[num]:
-                ww[num][ejimas] = kas_eina
-            if (list(ww[num].values()).count("X") > 1) and (list(ww[num].values()).count("0") == 0):
-                temp_w = ww[num].copy()
-                for key, value in temp_w.items():
-                    print(f"mano ejimas, radau du X, pridedu 200 prie {verte[key]}")
-                    verte[key] += 200
-
-    if list(pozicijos.values()).count("X") == list(pozicijos.values()).count("0"):
-        for num in range(1, 9):
-            if ejimas in ww[num]:
-                ww[num][ejimas] = kas_eina
-            if (list(ww[num].values()).count("0") > 1) and (list(ww[num].values()).count("X") == 0):
-                temp_w = ww[num].copy()
-                for key, value in temp_w.items():
-                    print(f"prieso ejimas, radau du 0, pridedu 200 prie {verte[key]}")
-                    verte[key] += 200
+    if poziciju_sarasas["a2"] == "0" and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a3"] != "X"):
+        verte["a1"] = verte["a1"] + 2
+        verte["a3"] = verte["a3"] + 2
 
 
-    for num in range(1,9):
-        if ejimas in ww[num]:
-            ww[num][ejimas] = kas_eina
-        if (list(ww[num].values()).count("0") > 1) and (list(ww[num].values()).count("X") == 0):
-            temp_w = ww[num].copy()
-            for key, value in temp_w.items():
-                print(f"radau du 0, pridedu 20 prie {verte[key]}")
-                verte[key] += 20
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["a2"] != "X" and poziciju_sarasas["a3"] != "X"):
 
-        if (list(ww[num].values()).count("X") > 1) and (list(ww[num].values()).count("0") == 0):
-            temp_w = ww[num].copy()
-            for key, value in temp_w.items():
-                print(f"radau du X, pridedu 10 prie {verte[key]}")
-                verte[key] += 10
+        verte["a1"] = verte["a1"] + 5
+        verte["a2"] = verte["a2"] + 3
+        verte["a3"] = verte["a3"] + 5
 
-        if (list(ww[num].values()).count("0") > 0) and (list(ww[num].values()).count("X") == 0):
-            temp_w = ww[num].copy()
-            for key, value in temp_w.items():
-                print(f"radau 0, pridedu 3 prie {verte[key]}")
-                verte[key] += 3
+    if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["c1"] != "X" and poziciju_sarasas["c2"] != "X" and poziciju_sarasas["c3"] != "X"):
 
-        if (list(ww[num].values()).count("0") > 0) and (list(ww[num].values()).count("X") == 1):
-            temp_w = ww[num].copy()
-            for key, value in temp_w.items():
-                verte[key] -= 1
+        verte["c1"] += 5
+        verte["c2"] += 3
+        verte["c3"] += 5
 
+    if (poziciju_sarasas["b1"] == "0" or poziciju_sarasas["b3"] == "0") and (poziciju_sarasas["b1"] != "X" and poziciju_sarasas["b2"] != "x" and poziciju_sarasas["b3"] != "X"):
 
+        verte["b1"] += 5
+        verte["b3"] += 5
 
-    print(verte)
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["b1"] != "X" and poziciju_sarasas["c1"] != "X"):
 
+        verte["a1"] += 5
+        verte["b1"] += 2
+        verte["c1"] += 5
 
+    if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and (poziciju_sarasas["a2"] != "X" and poziciju_sarasas["b2"] != "X" and poziciju_sarasas["c2"] != "X"):
 
+        verte["a2"] += 5
+        verte["c2"] += 5
 
+    if (poziciju_sarasas["a3"] == "0" or poziciju_sarasas["c3"] == "0") and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["b3"] != "X" and poziciju_sarasas["c3"] != "X"):
 
+        verte["a3"] += 5
+        verte["b3"] += 3
+        verte["c3"] += 5
 
-def vertes_tikrinimas(verte,
-                      poziciju_sarasas):  # galimų ėjimų vertės tikrinimas atsižvelgiant į savo ėjimus ir į priešininko ėjimus
-    for key, value in verte.items():  # prioritetas skiriamas ne savo pergalės užtikrinimui, bet priešininko pralaimėjimui
-        if key in uzimti:
-            verte[key] = -1000
+    if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a1"] != "X" and poziciju_sarasas["c3"] != "X"):
 
+        verte["a1"] += 5
+        verte["c3"] += 5
 
+    if poziciju_sarasas["b2"] == "0" and (poziciju_sarasas["a3"] != "X" and poziciju_sarasas["c1"] != "X"):
 
-def pries_zmogu():  # pats žaidimas, antras žaidėjas žmogus
+        verte["a3"] += 5
+        verte["c1"] += 5
+
+    if ((poziciju_sarasas["a1"] == "X" or poziciju_sarasas["a3"] == "X") and poziciju_sarasas["a2"] == "X") or (poziciju_sarasas["a1"] == "X" and poziciju_sarasas["a3"] == "X"):
+
+        verte["a1"] += 12
+        verte["a2"] += 12
+        verte["a3"] += 12
+
+    if ((poziciju_sarasas["b1"] == "X" or poziciju_sarasas["b3"] == "X") and poziciju_sarasas["b2"] == "X") or (poziciju_sarasas["b1"] == "X" and poziciju_sarasas["b3"] == "X"):
+
+        verte["b1"] += 12
+        verte["b2"] += 12
+        verte["b3"] += 12
+
+    if ((poziciju_sarasas["c1"] == "X" or poziciju_sarasas["c3"] == "X") and poziciju_sarasas["c2"] == "X") or (poziciju_sarasas["c1"] == "X" and poziciju_sarasas["c3"] == "X"):
+
+        verte["c1"] += 12
+        verte["c2"] += 12
+        verte["c3"] += 12
+
+    if ((poziciju_sarasas["a1"] == "X" or poziciju_sarasas["c1"] == "X") and poziciju_sarasas["b1"] == "X") or (poziciju_sarasas["a1"] == "X" and poziciju_sarasas["c1"] == "X"):
+
+        verte["a1"] += 12
+        verte["b1"] += 12
+        verte["c1"] += 12
+
+    if ((poziciju_sarasas["a2"] == "X" or poziciju_sarasas["c2"] == "X") and poziciju_sarasas["b2"] == "X") or (
+            poziciju_sarasas["a2"] == "X" and poziciju_sarasas["c2"] == "X"):
+
+        verte["a2"] += 12
+        verte["b2"] += 12
+        verte["c2"] += 12
+
+    if ((poziciju_sarasas["a3"] == "X" or poziciju_sarasas["c3"] == "X") and poziciju_sarasas["b3"] == "X") or (
+            poziciju_sarasas["a3"] == "X" and poziciju_sarasas["c3"] == "X"):
+
+        verte["a3"] += 12
+        verte["b3"] += 12
+        verte["c3"] += 12
+
+    if poziciju_sarasas["b2"] == "X" and (poziciju_sarasas["a1"] == "X" or poziciju_sarasas["c3"] == "X"):
+
+        verte["a1"] += 12
+        verte["c3"] += 12
+
+    if poziciju_sarasas["b2"] == "X" and (poziciju_sarasas["a3"] == "X" or poziciju_sarasas["c1"] == "X"):
+
+        verte["a3"] += 12
+        verte["c1"] += 12
+
+    if (poziciju_sarasas["a1"] == "0" and poziciju_sarasas["c1"] == "0") and poziciju_sarasas["b1"] != "X":
+
+        verte["b1"] += 30
+
+    if (poziciju_sarasas["a3"] == "0" and poziciju_sarasas["c3"] == "0") and poziciju_sarasas["b3"] != "X":
+
+        verte["b3"] += 30
+
+    if (poziciju_sarasas["a1"] == "0" and poziciju_sarasas["a3"] == "0") and poziciju_sarasas["a2"] != "X":
+
+        verte["a2"] += 30
+
+    if (poziciju_sarasas["c1"] == "0" and poziciju_sarasas["c3"] == "0") and poziciju_sarasas["c2"] != "X":
+
+        verte["c2"] += 30
+
+    if (poziciju_sarasas["b1"] == "0" or poziciju_sarasas["b3"] == "0") and poziciju_sarasas["b2"] != "X":
+
+        verte["b1"] += 10
+        verte["b3"] += 10
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["a3"] == "0") and poziciju_sarasas["a2"] != "X":
+
+        verte["a1"] += 10
+        verte["a3"] += 10
+
+    if (poziciju_sarasas["c1"] == "0" or poziciju_sarasas["c3"] == "0") and poziciju_sarasas["c2"] != "X":
+
+        verte["c1"] += 10
+        verte["c3"] += 10
+
+    if (poziciju_sarasas["a1"] == "0" or poziciju_sarasas["c1"] == "0") and poziciju_sarasas["b1"] != "X":
+
+        verte["a1"] += 10
+        verte["c1"] += 10
+
+    if (poziciju_sarasas["a2"] == "0" or poziciju_sarasas["c2"] == "0") and poziciju_sarasas["b2"] != "X":
+
+        verte["a2"] += 10
+        verte["c2"] += 10
+
+    if (poziciju_sarasas["a3"] == "0" or poziciju_sarasas["c3"] == "0") and poziciju_sarasas["b3"] != "X":
+
+        verte["a3"] += 10
+        verte["c3"] += 10
+
+def pries_zmogu():            #pats žaidimas, antras žaidėjas žmogus
     while nera_laimetojo:
         tikrink(pozicijos)
         zaidimo_pradzia()
@@ -298,11 +348,10 @@ def pries_zmogu():  # pats žaidimas, antras žaidėjas žmogus
         else:
             break
 
-
-def pries_kompiuteri():  # pats žaidimas, antras žaidėjas normalaus sunkumo kompiuteris
+def pries_kompiuteri():      #pats žaidimas, antras žaidėjas normalaus sunkumo kompiuteris
     while nera_laimetojo:
         tikrink(pozicijos)
-        # print(verte)
+        print(verte)
         if len(uzimti) % 2 == 0:
             zaidimo_pradzia()
             vertes_tikrinimas(verte, pozicijos)
@@ -318,7 +367,6 @@ def pries_kompiuteri():  # pats žaidimas, antras žaidėjas normalaus sunkumo k
                 uzimti.append(input_a)
                 verte[input_a] = 0
                 pozicijos[input_a] = "X"
-                vertes_korekcija("X", input_a)
 
         elif nera_laimetojo:
             tikrink(pozicijos)
@@ -328,12 +376,10 @@ def pries_kompiuteri():  # pats žaidimas, antras žaidėjas normalaus sunkumo k
             print(f"Kompiuterio ėjimas: {pasirinkimas1}")
             pozicijos[pasirinkimas1] = "0"
             verte[pasirinkimas1] = 0
-            vertes_korekcija("0", pasirinkimas1)
         else:
             break
 
-
-def pries_lengvakomp():  # pats žaidimas, antras žaidėjas lengvo sunkumo (atsitiktinis) kompiuteris
+def pries_lengvakomp():     #pats žaidimas, antras žaidėjas lengvo sunkumo (atsitiktinis) kompiuteris
     while nera_laimetojo:
         tikrink(pozicijos)
         vertes_tikrinimas(verte, pozicijos)
@@ -369,6 +415,7 @@ def pries_lengvakomp():  # pats žaidimas, antras žaidėjas lengvo sunkumo (ats
 
         else:
             break
+
 
 
 pagrindinis_meniu()
